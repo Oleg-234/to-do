@@ -1,0 +1,116 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block lnk %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block title %}Main page{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Статистика</h1>
+        <hr>
+        <div class="card-all">
+            <div class="cards card1">
+                <p>Всього завдань: {{ total_tasks }}</p>
+                <p>Всього завдань виконаних: {{ completed_tasks }}</p>
+                <p>Всього завдань активних: {{ active_tasks }}</p>
+            </div>
+            <div class="cards card2">
+                <p>Всього завдань high: {{ high_priority_tasks }}</p>
+                <p>Всього завдань medium: {{ medium_priority_tasks }}</p>
+                <p>Всього завдань low: {{ low_priority_tasks }}</p>
+            </div>
+            <div class="cards card3">
+                <p>Прострочені завдання: {{ end_tasks }}</p>
+                <p>Останній день на виконання: {{ todey_task }}</p>
+                <p>Ще багато часу: {{ upcoming_tasks }}</p>
+            </div>
+        </div>
+        
+        <div class="statist-all">
+            <div class="canv-stat">
+                <canvas id="priorityChart" width="200" height="100"></canvas>
+            </div>
+            <div class="mn-txt">
+                <p></p>
+                <canvas id="taskCompletionChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const totalTasks = {{ total_tasks }}; // Загальна кількість завдань
+        const completedTasks = {{ completed_tasks }}; // Кількість виконаних завдань
+        const activeTasks = {{ active_tasks }}; // Кількість активних завдань
+    
+        // Налаштування діаграми
+        const ctx = document.getElementById('taskCompletionChart').getContext('2d');
+        const taskChart = new Chart(ctx, {
+            type: 'pie', // Тип діаграми
+            data: {
+                labels: ['Completed', 'Active'], // Назви для сегментів
+                datasets: [{
+                    label: 'Tasks',
+                    data: [completedTasks, activeTasks], // Дані для діаграми
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)', // Колір для виконаних завдань
+                        'rgba(255, 99, 132, 0.2)', // Колір для активних завдань
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)', // Границя для виконаних
+                        'rgba(255, 99, 132, 1)', // Границя для активних
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top', // Розміщення легенди
+                    },
+                    title: {
+                        display: true,
+                        text: 'Task Statistics' // Заголовок діаграми
+                    }
+                }
+            }
+        });
+
+        // Скрипт для лінійної діаграми (або стовпчикової)
+        const priorityCtx = document.getElementById('priorityChart').getContext('2d');
+        const priorityChart = new Chart(priorityCtx, {
+            type: 'bar',  // Можна змінити на 'line' для лінійної діаграми
+            data: {
+                labels: ['Low Priority', 'Medium Priority', 'High Priority'],
+                datasets: [{
+                    label: 'Number of Tasks',
+                    data: [{{ low_priority_tasks }}, {{ medium_priority_tasks }}, {{ high_priority_tasks }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)', 
+                        'rgba(255, 206, 86, 0.2)', 
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)', 
+                        'rgba(255, 206, 86, 1)', 
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+{% endblock %}

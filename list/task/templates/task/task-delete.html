@@ -1,0 +1,18 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block lnk %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+
+{% block title %}Видалення завдання{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Видалення завдання</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-success" type="submit">Видалити завдання</button>
+        </form>
+    </div>
+{% endblock %}

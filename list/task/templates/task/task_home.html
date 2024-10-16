@@ -1,0 +1,92 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block lnk %}
+    <link rel="stylesheet" href="{% static 'main/css/task.css' %}">
+{% endblock %}
+
+{% block title %}Всі завдання{% endblock %}
+
+{% block content %}
+
+<div class="prefeatures">
+    <div class="features task">
+        <h3 class="mn-txt">Task</h3>
+        <p class="p-el-hight">high-priority</p>
+        {% for el in task %}
+            {% if el.priority == 3 %}
+            {% if el.completed == False %}
+                <div class="high-priority">
+                    <div class="container-all high">
+                        <div class="container1">
+                            <h3>{{ el.title }}</h3>
+                            <p>{{ el.description }}</p>
+                        </div>
+                        <div class="container2">
+                            <p>{{ el.duedate }}</p>
+                            <a href="{% url 'task-delete' el.id %}"><i class="fa-solid fa-trash"></i></a><a href="{% url 'task_completed' el.id %}"><i class="fa-solid fa-check"></i></a>
+                        </div>          
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        <p class="p-el-medium">medium-priority</p>
+        {% for el in task %}
+            {% if el.priority == 2 %}
+            {% if el.completed == False %}
+                <div class="medium-priority">
+                    <div class="container-all medium">
+                        <div class="container1">
+                            <h3>{{ el.title }}</h3>
+                            <p>{{ el.description }}</p>
+                        </div>
+                        <div class="container2">
+                            <p>{{ el.duedate }}</p>
+                            <a href="{% url 'task-delete' el.id %}"><i class="fa-solid fa-trash"></i></a><a href="{% url 'task_completed' el.id %}"><i class="fa-solid fa-check"></i></a>
+                        </div>  
+                    </div>   
+                </div>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        <p class="p-el-low">low-priority</p>
+        {% for el in task %}
+            {% if el.priority == 1 %}
+            {% if el.completed == False %}
+                <div class="low-priority">
+                    <div class="container-all low">
+                        <div class="container1">
+                            <h3>{{ el.title }}</h3>
+                            <p>{{ el.description }}</p>
+                        </div>
+                        <div class="container2">
+                            <p>{{ el.duedate }}</p>
+                            <a href="{% url 'task-delete' el.id %}"><i class="fa-solid fa-trash"></i></a><a href="{% url 'task_completed' el.id %}"><i class="fa-solid fa-check"></i></a>
+                        </div>  
+                    </div> 
+                </div>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        <p class="p-el-comp">completed</p>
+        {% for el in task %}
+            {% if el.completed == True %}
+                <div class="low-priority">
+                    <div class="container-all comp">
+                        <div class="container1">
+                            <h3>{{ el.title }}</h3>
+                            <p>{{ el.description }}</p>
+                        </div>
+                        <div class="container2">
+                            <p>{{ el.duedate }}</p>
+                            <a href="{% url 'task-delete' el.id %}"><i class="fa-solid fa-trash"></i></a><a href="{% url 'task_completed' el.id %}"><i class="fa-solid fa-delete-left"></i></a>
+                        </div>  
+                    </div> 
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
