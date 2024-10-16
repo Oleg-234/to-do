@@ -8,54 +8,5 @@
 {% block title %}Всі завдання{% endblock %}
 
 {% block content %}
-<style>
-  /* Стилі для спливаючого вікна */
-  .notification-popup {
-      display: none;
-      position: absolute;
-      top: 30px;
-      right: 0;
-      width: 200px;
-      background-color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      border-radius: 5px;
-      padding: 10px;
-      z-index: 1000;
-  }
-
-  .notification-popup.active {
-      display: block;
-  }
-
-  /* Стилі для самого дзвіночка */
-  .notification-icon {
-      position: relative;
-      cursor: pointer;
-  }
-</style>
-
-<div class="notification-icon">
-  <i class="fa-solid fa-bell"></i>
-  <div class="notification-popup" id="popup">
-      <p>Ви не маєте нових повідомлень.</p>
-  </div>
-</div>
-
-<script>
-  // Додаємо подію для відкриття/закриття вікна при натисканні на дзвіночок
-  const notificationIcon = document.querySelector('.notification-icon');
-  const popup = document.getElementById('popup');
-
-  notificationIcon.addEventListener('click', () => {
-      popup.classList.toggle('active');
-  });
-
-  // Закриття вікна при кліку поза ним
-  document.addEventListener('click', (event) => {
-      if (!notificationIcon.contains(event.target)) {
-          popup.classList.remove('active');
-      }
-  });
-</script>
 
 {% endblock %}
